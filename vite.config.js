@@ -1,7 +1,25 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+const { defineConfig } = require('vite');
 
-// https://vite.dev/config/
-export default defineConfig({
+module.exports = defineConfig({
   plugins: [react()],
-})
+  define: {
+    "process.env": {},
+    global: {},
+  },
+  resolve: {
+    alias: {
+      process: "process/browser",
+      stream: "stream-browserify",
+      zlib: "browserify-zlib",
+      util: "util",
+    },
+  },
+  build: {
+    rollupOptions: {
+      external: ["fsevents"],
+    },
+  },
+  optimizeDeps: {
+    include: ["buffer"],
+  },
+});
