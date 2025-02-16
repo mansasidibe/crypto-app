@@ -6,19 +6,29 @@ import Header from './components/Header';
 import TransactionForm from './components/TransactionForm';
 import TransactionHistory from './components/TransactionHistory';
 import Footer from './components/Footer';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
 
   return (
     <Web3Provider>
-      <div className={`min-h-screen ${darkMode ? 'bg-gray-900 text-white' : 'bg-gray-100'}`}>
+      <div className={`min-vh-100 ${darkMode ? 'bg-dark text-light' : 'bg-light text-dark'}`}>
         <Header darkMode={darkMode} setDarkMode={setDarkMode} />
-        <main className="container mx-auto px-4 py-8 pt-24">
-          <TransactionForm darkMode={darkMode} />
-          <TransactionHistory darkMode={darkMode} />
+        
+        <main className="container py-4">
+          <div className="row">
+            <div className="col-12">
+              <TransactionForm darkMode={darkMode} />
+            </div>
+            <div className="col-12 mt-4">
+              <TransactionHistory darkMode={darkMode} />
+            </div>
+          </div>
         </main>
+        
         <Footer darkMode={darkMode} />
+        
         <ToastContainer position="bottom-right" theme={darkMode ? 'dark' : 'light'} />
       </div>
     </Web3Provider>

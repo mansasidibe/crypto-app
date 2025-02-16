@@ -26,153 +26,115 @@ const TransactionHistory = ({ darkMode }) => {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    <div
-      className={`${
-        darkMode ? "bg-gray-800 text-white" : "bg-white"
-      } p-6 rounded-lg shadow-md`}
-    >
-      <h2
-        className={`text-2xl font-semibold mb-4 ${
-          darkMode ? "text-white" : "text-gray-800"
-        }`}
-      >
-        Transaction History
-      </h2>
-      <div className="mb-4">
-        <div className="relative">
-          <input
-            type="text"
-            placeholder="Search transactions..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className={`w-full pl-10 pr-4 py-2 rounded-md ${
-              darkMode ? "bg-gray-700 text-white" : "bg-gray-100 text-gray-900"
-            } focus:outline-none focus:ring-2 focus:ring-blue-500`}
-          />
-          <Search
-            className={`absolute left-3 top-2.5 ${
-              darkMode ? "text-gray-400" : "text-gray-500"
-            }`}
-            size={20}
-          />
+    <div className={`card ${darkMode ? "bg-dark text-white" : "bg-light"}`}>
+      <div className="card-body">
+        <h2 className="card-title mb-4">
+          Transaction History
+        </h2>
+        <div className="mb-4">
+          <div className="position-relative">
+            <input
+              type="text"
+              placeholder="Search transactions..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className={`form-control ${darkMode ? "bg-dark text-white" : "bg-light"}`}
+            />
+            <Search
+              className={`position-absolute top-50 start-0 translate-middle-y ${
+                darkMode ? "text-muted" : "text-secondary"
+              }`}
+              size={20}
+            />
+          </div>
         </div>
-      </div>
-      {currentTransactions.length === 0 ? (
-        <p className={`text-gray-500 ${darkMode ? "text-gray-400" : ""}`}>
-          No transactions found.
-        </p>
-      ) : (
-        <ul className="space-y-4">
-          {currentTransactions.map((tx, index) => (
-            <li
-              key={index}
-              className={`border-b ${
-                darkMode ? "border-gray-700" : "border-gray-200"
-              } pb-4 last:border-b-0`}
-            >
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-2">
-                  <Clock
-                    size={18}
-                    className={darkMode ? "text-gray-400" : "text-gray-500"}
-                  />
-                  <span
-                    className={`text-sm ${
-                      darkMode ? "text-gray-400" : "text-gray-500"
-                    }`}
-                  >
-                    {tx.timestamp}
+        {currentTransactions.length === 0 ? (
+          <p className={`text-muted ${darkMode ? "text-light" : ""}`}>
+            No transactions found.
+          </p>
+        ) : (
+          <ul className="list-unstyled">
+            {currentTransactions.map((tx, index) => (
+              <li
+                key={index}
+                className={`border-bottom ${darkMode ? "border-dark" : "border-light"} pb-4 mb-4`}
+              >
+                <div className="d-flex justify-content-between">
+                  <div className="d-flex align-items-center">
+                    <Clock
+                      size={18}
+                      className={darkMode ? "text-muted" : "text-secondary"}
+                    />
+                    <span className={`ms-2 ${darkMode ? "text-muted" : "text-secondary"}`}>
+                      {tx.timestamp}
+                    </span>
+                  </div>
+                  <span className="text-primary">
+                    {tx.amount} ETH
                   </span>
                 </div>
-                <span className="text-sm font-medium text-blue-600">
-                  {tx.amount} ETH
-                </span>
-              </div>
-              <div className="mt-2 flex items-center space-x-2">
-                <span className="text-sm truncate max-w-[150px]">
-                  {tx.addressFrom}
-                </span>
-                <ArrowRight
-                  size={16}
-                  className={darkMode ? "text-gray-400" : "text-gray-500"}
-                />
-                <span className="text-sm truncate max-w-[150px]">
-                  {tx.addressTo}
-                </span>
-              </div>
-              <div className="mt-2">
-                <span
-                  className={`text-sm font-medium ${
-                    darkMode ? "text-gray-300" : "text-gray-700"
-                  }`}
+                <div className="mt-2 d-flex align-items-center">
+                  <span className="text-truncate" style={{ maxWidth: "150px" }}>
+                    {tx.addressFrom}
+                  </span>
+                  <ArrowRight
+                    size={16}
+                    className={darkMode ? "text-muted" : "text-secondary"}
+                  />
+                  <span className="text-truncate" style={{ maxWidth: "150px" }}>
+                    {tx.addressTo}
+                  </span>
+                </div>
+                <div className="mt-2">
+                  <span className={`fw-medium ${darkMode ? "text-light" : "text-dark"}`}>
+                    Keyword:{" "}
+                  </span>
+                  <span className={`${darkMode ? "text-muted" : "text-secondary"}`}>
+                    {tx.keyword}
+                  </span>
+                </div>
+                <div className="mt-1">
+                  <span className={`fw-medium ${darkMode ? "text-light" : "text-dark"}`}>
+                    Message:{" "}
+                  </span>
+                  <span className={`${darkMode ? "text-muted" : "text-secondary"}`}>
+                    {tx.message}
+                  </span>
+                </div>
+                <div className="mt-2">
+                  <a
+                    href={`https://sepolia.etherscan.io/tx/${tx.transactionHash}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary d-flex align-items-center"
+                  >
+                    View on Etherscan
+                    <ExternalLink size={14} className="ms-1" />
+                  </a>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+        {filteredTransactions.length > transactionsPerPage && (
+          <div className="mt-4 d-flex justify-content-center">
+            {Array.from(
+              {
+                length: Math.ceil(filteredTransactions.length / transactionsPerPage),
+              },
+              (_, i) => (
+                <button
+                  key={i}
+                  onClick={() => paginate(i + 1)}
+                  className={`btn ${currentPage === i + 1 ? "btn-primary" : "btn-outline-secondary"} mx-1`}
                 >
-                  Keyword:{" "}
-                </span>
-                <span
-                  className={`text-sm ${
-                    darkMode ? "text-gray-400" : "text-gray-600"
-                  }`}
-                >
-                  {tx.keyword}
-                </span>
-              </div>
-              <div className="mt-1">
-                <span
-                  className={`text-sm font-medium ${
-                    darkMode ? "text-gray-300" : "text-gray-700"
-                  }`}
-                >
-                  Message:{" "}
-                </span>
-                <span
-                  className={`text-sm ${
-                    darkMode ? "text-gray-400" : "text-gray-600"
-                  }`}
-                >
-                  {tx.message}
-                </span>
-              </div>
-              <div className="mt-2">
-                <a
-                  href={`https://sepolia.etherscan.io/tx/${tx.transactionHash}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-500 hover:text-blue-600 text-sm flex items-center"
-                >
-                  View on Etherscan
-                  <ExternalLink size={14} className="ml-1" />
-                </a>
-              </div>
-            </li>
-          ))}
-        </ul>
-      )}
-      {filteredTransactions.length > transactionsPerPage && (
-        <div className="mt-4 flex justify-center">
-          {Array.from(
-            {
-              length: Math.ceil(
-                filteredTransactions.length / transactionsPerPage
-              ),
-            },
-            (_, i) => (
-              <button
-                key={i}
-                onClick={() => paginate(i + 1)}
-                className={`mx-1 px-3 py-1 rounded ${
-                  currentPage === i + 1
-                    ? "bg-blue-600 text-white"
-                    : darkMode
-                    ? "bg-gray-700 text-gray-300 hover:bg-gray-600"
-                    : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                }`}
-              >
-                {i + 1}
-              </button>
-            )
-          )}
-        </div>
-      )}
+                  {i + 1}
+                </button>
+              )
+            )}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

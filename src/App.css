@@ -1,3 +1,4 @@
+/* Centrage de l'application avec Bootstrap */
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -5,6 +6,7 @@
   text-align: center;
 }
 
+/* Logo : Bootstrap n'a pas de classe spécifique pour le drop-shadow, donc on conserve celle-ci */
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -18,6 +20,7 @@
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
+/* Animation du logo, utilisé uniquement si l'utilisateur n'a pas de préférence pour les animations */
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);
@@ -33,10 +36,12 @@
   }
 }
 
+/* Bootstrap - Card style */
 .card {
   padding: 2em;
 }
 
+/* Utilisation d'une couleur de texte plus discrète, peut être remplacé par une classe Bootstrap de couleur de texte */
 .read-the-docs {
   color: #888;
 }

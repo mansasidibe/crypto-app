@@ -55,23 +55,15 @@ const TransactionForm = ({ darkMode }) => {
   return (
     <div
       className={`${
-        darkMode ? "bg-gray-800" : "bg-white"
-      } p-6 rounded-lg shadow-md mb-8`}
+        darkMode ? "bg-dark text-white" : "bg-light"
+      } p-4 rounded shadow mb-4`}
     >
-      <h2
-        className={`text-2xl font-semibold mb-4 ${
-          darkMode ? "text-white" : "text-gray-800"
-        }`}
-      >
-        Send Transaction
-      </h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
+      <h2 className="h3 mb-4">Send Transaction</h2>
+      <form onSubmit={handleSubmit} className="needs-validation" noValidate>
+        <div className="mb-3">
           <label
             htmlFor="to"
-            className={`block text-sm font-medium ${
-              darkMode ? "text-gray-300" : "text-gray-700"
-            }`}
+            className="form-label"
           >
             Recipient Address
           </label>
@@ -81,24 +73,22 @@ const TransactionForm = ({ darkMode }) => {
             name="to"
             value={formData.to}
             onChange={handleChange}
-            className={`mt-1 block w-full rounded-md ${
-              darkMode ? "bg-gray-700 text-white" : "bg-white text-gray-900"
-            } border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50`}
+            className={`form-control ${
+              darkMode ? "bg-dark text-white" : "bg-white text-dark"
+            }`}
           />
           {errors.to && (
-            <p className="mt-1 text-sm text-red-600">{errors.to}</p>
+            <div className="text-danger mt-2">{errors.to}</div>
           )}
         </div>
-        <div>
+        <div className="mb-3">
           <label
             htmlFor="amount"
-            className={`block text-sm font-medium ${
-              darkMode ? "text-gray-300" : "text-gray-700"
-            }`}
+            className="form-label"
           >
             Amount (ETH)
           </label>
-          <div className="mt-1 relative rounded-md shadow-sm">
+          <div className="input-group">
             <input
               type="number"
               id="amount"
@@ -107,30 +97,26 @@ const TransactionForm = ({ darkMode }) => {
               onChange={handleChange}
               step="0.0001"
               min="0"
-              className={`block w-full pr-16 rounded-md ${
-                darkMode ? "bg-gray-700 text-white" : "bg-white text-gray-900"
-              } border-gray-300 focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50`}
+              className={`form-control ${
+                darkMode ? "bg-dark text-white" : "bg-white text-dark"
+              }`}
             />
-            <div className="absolute inset-y-0 right-0 flex items-center">
-              <button
-                type="button"
-                onClick={setMaxAmount}
-                className="inline-flex items-center px-3 py-1 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-              >
-                Max
-              </button>
-            </div>
+            <button
+              type="button"
+              onClick={setMaxAmount}
+              className="btn btn-outline-secondary"
+            >
+              Max
+            </button>
           </div>
           {errors.amount && (
-            <p className="mt-1 text-sm text-red-600">{errors.amount}</p>
+            <div className="text-danger mt-2">{errors.amount}</div>
           )}
         </div>
-        <div>
+        <div className="mb-3">
           <label
             htmlFor="keyword"
-            className={`block text-sm font-medium ${
-              darkMode ? "text-gray-300" : "text-gray-700"
-            }`}
+            className="form-label"
           >
             Keyword
           </label>
@@ -140,20 +126,18 @@ const TransactionForm = ({ darkMode }) => {
             name="keyword"
             value={formData.keyword}
             onChange={handleChange}
-            className={`mt-1 block w-full rounded-md ${
-              darkMode ? "bg-gray-700 text-white" : "bg-white text-gray-900"
-            } border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50`}
+            className={`form-control ${
+              darkMode ? "bg-dark text-white" : "bg-white text-dark"
+            }`}
           />
           {errors.keyword && (
-            <p className="mt-1 text-sm text-red-600">{errors.keyword}</p>
+            <div className="text-danger mt-2">{errors.keyword}</div>
           )}
         </div>
-        <div>
+        <div className="mb-3">
           <label
             htmlFor="message"
-            className={`block text-sm font-medium ${
-              darkMode ? "text-gray-300" : "text-gray-700"
-            }`}
+            className="form-label"
           >
             Message
           </label>
@@ -162,20 +146,20 @@ const TransactionForm = ({ darkMode }) => {
             name="message"
             value={formData.message}
             onChange={handleChange}
-            rows={3}
-            className={`mt-1 block w-full rounded-md ${
-              darkMode ? "bg-gray-700 text-white" : "bg-white text-gray-900"
-            } border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50`}
+            rows="3"
+            className={`form-control ${
+              darkMode ? "bg-dark text-white" : "bg-white text-dark"
+            }`}
           ></textarea>
           {errors.message && (
-            <p className="mt-1 text-sm text-red-600">{errors.message}</p>
+            <div className="text-danger mt-2">{errors.message}</div>
           )}
         </div>
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 flex items-center justify-center"
+          className="btn btn-primary w-100 d-flex align-items-center justify-content-center"
         >
-          <Send className="mr-2" size={18} />
+          <Send className="me-2" size={18} />
           Send Transaction
         </button>
       </form>
